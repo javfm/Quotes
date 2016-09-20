@@ -29,10 +29,8 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.save
         format.html { redirect_to user_path(params[:user_id]), notice: 'List was successfully created.' }
-        format.json { render :show, status: :created, location: @list }
       else
         format.html { render :new }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -44,10 +42,8 @@ class ListsController < ApplicationController
       list_params[:user_id] = current_user[:id]
       if @list.update(list_params)
         format.html { redirect_to user_show_path, notice: 'List was successfully updated.' }
-        format.json { render :show, status: :ok, location: @list }
       else
         format.html { render :edit }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,7 +54,6 @@ class ListsController < ApplicationController
     @list.destroy
     respond_to do |format|
       format.html { redirect_to user_path(params[:user_id]), notice: 'List was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

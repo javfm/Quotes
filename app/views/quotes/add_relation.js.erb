@@ -1,2 +1,9 @@
-$("#updt_<%= @quote[:id] %>").val("Updated!")
-console.log($("#updt_<%= @quote[:id] %>").val())
+var id = <%= @quote[:id] %>;
+$("#updt_"+id).val("Updated!");
+console.log($("#updt_"+id).val());
+$("#notice_"+id).append("<small>Quote moved to:</small>");
+console.log("#notice_"+id);
+if (window.location.pathname.includes("user")) {
+  console.log("#quote_"+id);
+  $("#quote_"+id).fadeOut("slow");
+}

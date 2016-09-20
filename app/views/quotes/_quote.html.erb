@@ -10,6 +10,7 @@
     <% unless quote.user.nil? %>
         <small>Written by: <%= quote.user[:name]%></small>
     <% end %>
+    <div id="notice_<%= quote.id %>"></div>
     <% if logged_in? %>
         <%= form_for(quote, :url => add_relation_quote_path(quote[:id]), remote: true) do |f| %>
             <%= f.collection_select :list_ids, current_user.lists, :id, :name, {:include_blank => 'None'}  %>

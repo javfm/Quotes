@@ -32,10 +32,8 @@ class QuotesController < ApplicationController
     respond_to do |format|
       if @quote.save
         format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
-        format.json { render :show, status: :created, location: @quote }
       else
         format.html { render :new }
-        format.json { render json: @quote.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -47,10 +45,8 @@ class QuotesController < ApplicationController
       if @quote.update(quote_params)
         @quote.lists<<List.find(params[:list_ids])
         format.html { redirect_to @quote, notice: 'Quote was successfully updated.' }
-        format.json { render :show, status: :ok, location: @quote }
       else
         format.html { render :edit }
-        format.json { render json: @quote.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,7 +57,6 @@ class QuotesController < ApplicationController
     @quote.destroy
     respond_to do |format|
       format.html { redirect_to quotes_url, notice: 'Quote was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
