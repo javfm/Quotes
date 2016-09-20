@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<% @list.quotes.each do |quote| %>
+    <div class="col-xs-5 quote">
+      <h2><%= quote.title %></h2>
+      <p><%= quote.content %></p>
+      <% if logged_in? %>
+          <%= link_to 'Show', quote %>
+          <%= link_to 'Edit', edit_quote_path(quote) %>
+          <%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Delete from list', list_quote_path(current_user[:id], @list[:id], quote.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"pull-right" %>
+      <% end %>
+    </div>
+<% end %>

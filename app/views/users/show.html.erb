@@ -1,0 +1,28 @@
+<% provide(:username, @user.name) %>
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
+<h1>My Quotes</h1>
+<ul class="nav nav-pills">
+  <li class="active"><a data-toggle="tab" href="#all">All</a><li>
+  <% @lists.each do |list| %>
+    <li><a href="#<%= list.id %>" data-toggle="tab"><%= list.name %></a></li>
+  <% end %>
+</ul>
+<div class="tab-content">
+  <div id="all" class="tab-pane fade row active in">
+    <%= link_to 'New quote list', new_user_list_path(current_user) %>
+    <%= render @quotes %>
+  </div>
+  <%= render @lists %>
+</div>
+

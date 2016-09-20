@@ -1,0 +1,14 @@
+<div id="<%= list.id %>" class="tab-pane fade row">
+  <%= link_to 'New', new_user_list_path(current_user) %>
+  <span> | </span>
+  <%= link_to 'Edit', edit_user_list_path(@user[:id],list.id) %> |
+  <span> | </span>
+  <%= link_to 'Destroy', user_list_path(@user[:id],list.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <span> | Quote list</span>
+  <% if list.quotes.present? %>
+      <%= link_to 'Display this list ramdonly!', user_list_path(current_user[:id],list.id) %>
+      <span> | </span>
+      <%= link_to 'Display ramdon quote!', quote_path(list.quotes.shuffle.first.id) %>
+  <% end %>
+  <%= render list.quotes %>
+</div>

@@ -1,0 +1,21 @@
+<div class="col-xs-5 quote" id="quote_<%= quote.id %>">
+  <h2><%= quote.title %></h2>
+  <p><%= quote.content %></p>
+  <% if logged_in? && quote.user==current_user %>
+      <%= link_to 'Show', quote %>
+      <%= link_to 'Edit', edit_quote_path(quote) %>
+      <%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+  <div class="pull-right">
+    <% unless quote.user.nil? %>
+        <small>Written by: <%= quote.user[:name]%></small>
+    <% end %>
+    <% if logged_in? %>
+        <%= form_for(quote, :url => add_relation_quote_path(quote[:id]), remote: true) do |f| %>
+            <%= f.collection_select :list_ids, current_user.lists, :id, :name, {:include_blank => 'None'}  %>
+            <%= f.submit 'Update my list!', :id => "updt_#{quote[:id]}" %>
+        <% end %>
+    <% end %>
+  </div>
+  <%= social_share_button_tag(quote.title) %>
+</div>

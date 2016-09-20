@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Quotes</h1>
+  <div class="row">
+    <%= render @quotes %>
+  </div>
+
+<br>
+<% if logged_in? %>
+<%= link_to 'New Quote', new_quote_path %>
+<% end %>
+<div id = pagination >
+  <% for i in 0..Quote.all.count/5 %>
+    <%= link_to  i+1, pagination_path(i) %>
+  <% end %>
+</div>
