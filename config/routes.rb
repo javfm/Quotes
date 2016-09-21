@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'quotes#index'
-  get '/:pag', to: 'quotes#index', as:'pagination'
+  get '/lattest/:pag', to: 'quotes#index', as:'pagination'
 
   get    '/signup',  to: 'users#new'
   get    '/login',   to: 'sessions#new'

@@ -41,7 +41,7 @@ class ListsController < ApplicationController
     respond_to do |format|
       list_params[:user_id] = current_user[:id]
       if @list.update(list_params)
-        format.html { redirect_to user_show_path, notice: 'List was successfully updated.' }
+        format.html { redirect_to user_path(current_user), notice: 'List was successfully updated.' }
       else
         format.html { render :edit }
       end

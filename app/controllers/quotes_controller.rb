@@ -5,7 +5,7 @@ class QuotesController < ApplicationController
   # GET /quotes
   # GET /quotes.json
   def index
-    @quotes = Quote.all.offset(@pag.to_i).limit(5)
+    @quotes = Quote.all.page(params[:page]).per(10)
   end
 
   # GET /quotes/1
@@ -29,6 +29,7 @@ class QuotesController < ApplicationController
   def create
     @quote = Quote.new(quote_params)
     @quote.user_id = current_user[:id]
+    @quote.lists<<List.find(params[:quote][:list_ids]) if params[:quote][:list_ids].present?
     respond_to do |format|
       if @quote.save
         format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
@@ -43,7 +44,7 @@ class QuotesController < ApplicationController
   def update
     respond_to do |format|
       if @quote.update(quote_params)
-        @quote.lists<<List.find(params[:list_ids])
+        @quote.lists<<List.find(params[:quote][:list_ids])
         format.html { redirect_to @quote, notice: 'Quote was successfully updated.' }
       else
         format.html { render :edit }
@@ -67,7 +68,7 @@ class QuotesController < ApplicationController
 
   # POST /quotes/:quote_id/lists/:list_id
   def add_relation
-    if @list == -1
+    if @list.nil?
       @quote.lists.delete(@quote.lists)
     else
       @quote.lists<<(@list)
@@ -83,8 +84,10 @@ class QuotesController < ApplicationController
 
     def set_quote_list
       @quote = Quote.find(params[:id])
-      @list = -1 if params[:quote][:list_ids].blank?
-      @list ||= List.find(params[:quote][:list_ids])
+      if params[:quote][:list_ids].present?
+        @list = List.find(params[:quote][:list_ids])
+      end
+
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_quote

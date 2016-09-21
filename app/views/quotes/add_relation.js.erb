@@ -1,9 +1,17 @@
 var id = <%= @quote[:id] %>;
 $("#updt_"+id).val("Updated!");
-console.log($("#updt_"+id).val());
 $("#notice_"+id).append("<small>Quote moved to:</small>");
-console.log("#notice_"+id);
 if (window.location.pathname.includes("user")) {
-  console.log("#quote_"+id);
-  $("#quote_"+id).fadeOut("slow");
+  $("#quote_"+id).fadeOut(500);
+  <% if not @list.nil?  %>
+    setTimeout(function() {
+      $(".tab-pane[id*='<%= @list[:id] %>']" ).append($("#quote_"+id));
+    }, 500);
+    $("#quote_"+id).fadeIn();
+  <% else %>
+    setTimeout(function() {
+      $(".tab-pane[id*='all']" ).append($("#quote_"+id));
+    }, 500);
+    $("#quote_"+id).fadeIn();
+  <% end %>
 }

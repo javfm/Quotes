@@ -9,8 +9,4 @@
 <% if logged_in? %>
 <%= link_to 'New Quote', new_quote_path %>
 <% end %>
-<div id = pagination >
-  <% for i in 0..Quote.all.count/5 %>
-    <%= link_to  i+1, pagination_quotes_path(i) %>
-  <% end %>
-</div>
+<%= paginate @quotes %>
